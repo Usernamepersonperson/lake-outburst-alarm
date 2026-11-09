@@ -1,0 +1,410 @@
+{
+ "daily_real": {
+  "config": {
+   "rise_per_day": 2.0,
+   "min_ratio": 3.0,
+   "cusum_ratio": 5.0
+  },
+  "confirmed_events": 87,
+  "event_labels": {
+   "1987-08 storm floods": 15,
+   "1993-09 Valais floods": 14,
+   "1999-05 Pentecost floods": 12,
+   "2000-10 Valais floods": 18,
+   "2005-08 storm floods": 12,
+   "2020-10 storm floods": 16
+  },
+  "lead_p99": {
+   "events": 87,
+   "detector_alarmed": 48,
+   "fixed_alarmed": 56,
+   "both": 40,
+   "mean_lead_days": 0.4,
+   "earlier": 8,
+   "same_day": 30,
+   "later": 2
+  },
+  "lead_p95": {
+   "events": 87,
+   "detector_alarmed": 48,
+   "fixed_alarmed": 76,
+   "both": 45,
+   "mean_lead_days": 0.044444444444444446,
+   "earlier": 4,
+   "same_day": 34,
+   "later": 7
+  },
+  "fa_train_1981_2000_glacier_fed": {
+   "alarms": 119,
+   "rain_driven": 101,
+   "dry": 18,
+   "station_years": 277.8535249828884,
+   "per_station_year": 0.4282832114774452,
+   "dry_per_station_year": 0.06478233450919339
+  },
+  "fa_train_1981_2000_rain_fed": {
+   "alarms": 476,
+   "rain_driven": 458,
+   "dry": 18,
+   "station_years": 119.0800821355236,
+   "per_station_year": 3.9973099737894886,
+   "dry_per_station_year": 0.15115878052145126
+  },
+  "fa_test_2001_2020_glacier_fed": {
+   "alarms": 167,
+   "rain_driven": 141,
+   "dry": 26,
+   "station_years": 278.99794661190964,
+   "per_station_year": 0.5985707136128121,
+   "dry_per_station_year": 0.09319065002355158
+  },
+  "fa_test_2001_2020_rain_fed": {
+   "alarms": 507,
+   "rain_driven": 488,
+   "dry": 19,
+   "station_years": 119.5728952772074,
+   "per_station_year": 4.240091358703118,
+   "dry_per_station_year": 0.15889888720978157
+  }
+ },
+ "subdaily_sim": {
+  "label": "SIMULATED surges on SIMULATED background, fixed 10-min sampling",
+  "grid_fixed_2p5x": [
+   {
+    "rise_h": 2.0,
+    "peak_ratio": 3.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 0.5,
+    "median_detect_h": 1.3333333333333286
+   },
+   {
+    "rise_h": 2.0,
+    "peak_ratio": 5.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 0.5,
+    "median_detect_h": 1.0
+   },
+   {
+    "rise_h": 2.0,
+    "peak_ratio": 10.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 0.3333333333333286,
+    "median_detect_h": 0.6666666666666714
+   },
+   {
+    "rise_h": 6.0,
+    "peak_ratio": 3.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 1.6666666666666714,
+    "median_detect_h": 3.9166666666666643
+   },
+   {
+    "rise_h": 6.0,
+    "peak_ratio": 5.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 1.5833333333333286,
+    "median_detect_h": 2.6666666666666714
+   },
+   {
+    "rise_h": 6.0,
+    "peak_ratio": 10.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 1.1666666666666714,
+    "median_detect_h": 1.6666666666666714
+   },
+   {
+    "rise_h": 12.0,
+    "peak_ratio": 3.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 2.0,
+    "median_detect_h": 8.666666666666671
+   },
+   {
+    "rise_h": 12.0,
+    "peak_ratio": 5.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 2.6666666666666643,
+    "median_detect_h": 5.666666666666671
+   },
+   {
+    "rise_h": 12.0,
+    "peak_ratio": 10.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 2.5,
+    "median_detect_h": 3.25
+   },
+   {
+    "rise_h": 24.0,
+    "peak_ratio": 3.0,
+    "trials": 20,
+    "detected": 14,
+    "fixed_detected": 20,
+    "median_lead_h": -0.6666666666666643,
+    "median_detect_h": 22.916666666666664
+   },
+   {
+    "rise_h": 24.0,
+    "peak_ratio": 5.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 0.1666666666666643,
+    "median_detect_h": 16.416666666666664
+   },
+   {
+    "rise_h": 24.0,
+    "peak_ratio": 10.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 1.9166666666666643,
+    "median_detect_h": 8.833333333333336
+   }
+  ],
+  "grid_fixed_4x": [
+   {
+    "rise_h": 2.0,
+    "peak_ratio": 3.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 0,
+    "median_lead_h": null,
+    "median_detect_h": 1.3333333333333286
+   },
+   {
+    "rise_h": 2.0,
+    "peak_ratio": 5.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 0.8333333333333286,
+    "median_detect_h": 1.0
+   },
+   {
+    "rise_h": 2.0,
+    "peak_ratio": 10.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 0.8333333333333286,
+    "median_detect_h": 0.6666666666666714
+   },
+   {
+    "rise_h": 6.0,
+    "peak_ratio": 3.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 0,
+    "median_lead_h": null,
+    "median_detect_h": 3.9166666666666643
+   },
+   {
+    "rise_h": 6.0,
+    "peak_ratio": 5.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 2.8333333333333357,
+    "median_detect_h": 2.6666666666666714
+   },
+   {
+    "rise_h": 6.0,
+    "peak_ratio": 10.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 2.333333333333343,
+    "median_detect_h": 1.6666666666666714
+   },
+   {
+    "rise_h": 12.0,
+    "peak_ratio": 3.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 0,
+    "median_lead_h": null,
+    "median_detect_h": 8.666666666666671
+   },
+   {
+    "rise_h": 12.0,
+    "peak_ratio": 5.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 5.166666666666657,
+    "median_detect_h": 5.666666666666671
+   },
+   {
+    "rise_h": 12.0,
+    "peak_ratio": 10.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 4.75,
+    "median_detect_h": 3.25
+   },
+   {
+    "rise_h": 24.0,
+    "peak_ratio": 3.0,
+    "trials": 20,
+    "detected": 14,
+    "fixed_detected": 0,
+    "median_lead_h": null,
+    "median_detect_h": 22.916666666666664
+   },
+   {
+    "rise_h": 24.0,
+    "peak_ratio": 5.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 5.583333333333343,
+    "median_detect_h": 16.416666666666664
+   },
+   {
+    "rise_h": 24.0,
+    "peak_ratio": 10.0,
+    "trials": 20,
+    "detected": 20,
+    "fixed_detected": 20,
+    "median_lead_h": 6.916666666666664,
+    "median_detect_h": 8.833333333333336
+   }
+  ],
+  "sim_false_alarms_diurnal_0.3": {
+   "alarms": 0,
+   "station_years": 5.013698630136986
+  },
+  "sim_false_alarms_diurnal_0.6": {
+   "alarms": 0,
+   "station_years": 5.013698630136986
+  }
+ },
+ "energy_sim": {
+  "label": "SIMULATED 60-day runs, 1-2 surges each; energy uses ASSUMED per-event costs",
+  "runs": 12,
+  "mean_energy_saving": 0.17253659129908547,
+  "mean_sample_reduction": 0.6224054783950617,
+  "mean_detect_delay_min": -4.583333333333144,
+  "max_detect_delay_min": 0.0,
+  "fixed_mean_power_uw": 98.13223379629629,
+  "adaptive_mean_power_uw": 81.20482896090535
+ },
+ "travel_min": {
+  "20.0": {
+   "village A (6 km)": 17.37703833017869,
+   "town B (21 km)": 89.72174705137844
+  },
+  "60.0": {
+   "village A (6 km)": 11.197659497997487,
+   "town B (21 km)": 57.8161568132114
+  },
+  "150.0": {
+   "village A (6 km)": 7.761599936444204,
+   "town B (21 km)": 40.07497094612676
+  }
+ },
+ "live_real": {
+  "label": "REAL 10-minute records, nothing injected (relay of FOEN real-time data)",
+  "range": [
+   "2026-10-08T01:00Z",
+   "2026-11-09T00:00Z"
+  ],
+  "stations": 9,
+  "events": [
+   {
+    "station": "2070",
+    "epoch": 1791538200,
+    "peak_q": 5.63,
+    "ref_q": 0.83,
+    "detector_t": 6.166666666666667,
+    "fixed_t": 16.0,
+    "lead_h": 9.833333333333332,
+    "time": "2026-10-09T09:30Z"
+   },
+   {
+    "station": "2070",
+    "epoch": 1792610400,
+    "peak_q": 11.99,
+    "ref_q": 0.83,
+    "detector_t": 318.3333333333333,
+    "fixed_t": 328.1666666666667,
+    "lead_h": 9.833333333333371,
+    "time": "2026-10-21T19:20Z"
+   },
+   {
+    "station": "2070",
+    "epoch": 1792949400,
+    "peak_q": 43.71,
+    "ref_q": 0.83,
+    "detector_t": 392.5,
+    "fixed_t": 390.6666666666667,
+    "lead_h": -1.8333333333333144,
+    "time": "2026-10-25T17:30Z"
+   },
+   {
+    "station": "2109",
+    "epoch": 1792596000,
+    "peak_q": 12.78,
+    "ref_q": 4.36,
+    "detector_t": 322.5,
+    "fixed_t": 323.6666666666667,
+    "lead_h": 1.1666666666666856,
+    "time": "2026-10-21T15:20Z"
+   },
+   {
+    "station": "2109",
+    "epoch": 1792959000,
+    "peak_q": 24.76,
+    "ref_q": 4.36,
+    "detector_t": 421.6666666666667,
+    "fixed_t": 423.0,
+    "lead_h": 1.3333333333333144,
+    "time": "2026-10-25T20:10Z"
+   },
+   {
+    "station": "2200",
+    "epoch": 1792953000,
+    "peak_q": 18.0,
+    "ref_q": 2.43,
+    "detector_t": 420.5,
+    "fixed_t": 422.0,
+    "lead_h": 1.5,
+    "time": "2026-10-25T18:30Z"
+   }
+  ],
+  "median_lead_h": 1.4166666666666572,
+  "mean_lead_h": 3.638888888888898,
+  "natural": {
+   "false_alarms": 7,
+   "hours": 4602.0,
+   "stations": 6,
+   "station_years": 0.5249828884325805
+  },
+  "peaking": {
+   "false_alarms": 22,
+   "hours": 2301.0,
+   "stations": 3,
+   "alarms": 34,
+   "station_years": 0.2624914442162902
+  }
+ }
+}
