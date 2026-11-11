@@ -111,8 +111,17 @@ def live_section() -> dict | None:
         int(v["epoch"][-1]) for v in live.values()
     ]
     leads = [e["lead_h"] for e in r["events"] if e["lead_h"] is not None]
+    src = data.live_source() or {}
+    if src.get("kind") == "foen40d":
+        label = (
+            "REAL 10-minute records, nothing injected (official FOEN/BAFU 40-day records, "
+            "5-min values on the 10-min grid)"
+        )
+    else:
+        label = "REAL 10-minute records, nothing injected (relay of FOEN real-time data)"
     return {
-        "label": "REAL 10-minute records, nothing injected (relay of FOEN real-time data)",
+        "label": label,
+        "source": src,
         "range": [data.epoch_to_iso(min(epochs)), data.epoch_to_iso(max(epochs))],
         "stations": len(live),
         "events": [{**e, "time": data.epoch_to_iso(e["epoch"])} for e in r["events"]],

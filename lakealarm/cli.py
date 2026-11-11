@@ -80,6 +80,9 @@ def cmd_tune(_: argparse.Namespace) -> int:
 
 
 def cmd_fetch(args: argparse.Namespace) -> int:
+    if args.source == "foen":
+        print("saved", data.fetch_foen40())
+        return 0
     end = date.today()
     start = end - timedelta(days=args.days)
     out = data.fetch_live(start, end)
@@ -103,8 +106,14 @@ def main(argv: list[str] | None = None) -> int:
     d.add_argument("--energy-runs", type=int, default=12)
     d.set_defaults(fn=cmd_demo)
     sub.add_parser("tune", help="re-derive the daily setting").set_defaults(fn=cmd_tune)
-    f = sub.add_parser("fetch", help="download recent 10-min real data into cache/")
-    f.add_argument("--days", type=int, default=32)
+    f = sub.add_parser("fetch", help="download recent real 10-min data into cache/")
+    f.add_argument(
+        "--source",
+        choices=["foen", "relay"],
+        default="foen",
+        help="foen: official FOEN 40-day records (default); relay: api.existenz.ch",
+    )
+    f.add_argument("--days", type=int, default=32, help="relay only: days back from today")
     f.set_defaults(fn=cmd_fetch)
     t = sub.add_parser("travel", help="travel time over one reach")
     t.add_argument("--q", type=float, required=True, help="discharge m3/s")

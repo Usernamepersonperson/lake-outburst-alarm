@@ -323,88 +323,153 @@
   }
  },
  "live_real": {
-  "label": "REAL 10-minute records, nothing injected (relay of FOEN real-time data)",
+  "label": "REAL 10-minute records, nothing injected (official FOEN/BAFU 40-day records, 5-min values on the 10-min grid)",
+  "source": {
+   "kind": "foen40d",
+   "retrieved": "2026-11-12",
+   "files": 9
+  },
   "range": [
-   "2026-10-08T01:00Z",
-   "2026-11-09T00:00Z"
+   "2026-10-02T22:00Z",
+   "2026-11-11T22:20Z"
   ],
   "stations": 9,
   "events": [
    {
     "station": "2070",
-    "epoch": 1791538200,
-    "peak_q": 5.63,
-    "ref_q": 0.83,
-    "detector_t": 6.166666666666667,
-    "fixed_t": 16.0,
-    "lead_h": 9.833333333333332,
-    "time": "2026-10-09T09:30Z"
+    "epoch": 1791499200,
+    "peak_q": 9.787,
+    "ref_q": 0.709,
+    "detector_t": 129.16666666666666,
+    "fixed_t": 136.83333333333334,
+    "lead_h": 7.666666666666686,
+    "time": "2026-10-08T22:40Z"
+   },
+   {
+    "station": "2070",
+    "epoch": 1791675600,
+    "peak_q": 6.416,
+    "ref_q": 0.709,
+    "detector_t": 186.66666666666666,
+    "fixed_t": null,
+    "lead_h": null,
+    "time": "2026-10-10T23:40Z"
    },
    {
     "station": "2070",
     "epoch": 1792610400,
-    "peak_q": 11.99,
-    "ref_q": 0.83,
-    "detector_t": 318.3333333333333,
-    "fixed_t": 328.1666666666667,
-    "lead_h": 9.833333333333371,
+    "peak_q": 11.992,
+    "ref_q": 0.709,
+    "detector_t": 441.3333333333333,
+    "fixed_t": 447.6666666666667,
+    "lead_h": 6.333333333333371,
     "time": "2026-10-21T19:20Z"
    },
    {
     "station": "2070",
     "epoch": 1792949400,
-    "peak_q": 43.71,
-    "ref_q": 0.83,
-    "detector_t": 392.5,
-    "fixed_t": 390.6666666666667,
-    "lead_h": -1.8333333333333144,
+    "peak_q": 43.711,
+    "ref_q": 0.709,
+    "detector_t": 543.6666666666666,
+    "fixed_t": null,
+    "lead_h": null,
     "time": "2026-10-25T17:30Z"
    },
    {
+    "station": "2070",
+    "epoch": 1794312000,
+    "peak_q": 13.988,
+    "ref_q": 0.709,
+    "detector_t": 918.8333333333334,
+    "fixed_t": 924.3333333333334,
+    "lead_h": 5.5,
+    "time": "2026-11-10T12:00Z"
+   },
+   {
     "station": "2109",
-    "epoch": 1792596000,
-    "peak_q": 12.78,
-    "ref_q": 4.36,
-    "detector_t": 322.5,
-    "fixed_t": 323.6666666666667,
-    "lead_h": 1.1666666666666856,
-    "time": "2026-10-21T15:20Z"
+    "epoch": 1791475200,
+    "peak_q": 22.415,
+    "ref_q": 4.588,
+    "detector_t": 136.33333333333334,
+    "fixed_t": 136.0,
+    "lead_h": -0.3333333333333428,
+    "time": "2026-10-08T16:00Z"
+   },
+   {
+    "station": "2109",
+    "epoch": 1792597800,
+    "peak_q": 13.285,
+    "ref_q": 4.588,
+    "detector_t": 445.5,
+    "fixed_t": 447.1666666666667,
+    "lead_h": 1.6666666666666856,
+    "time": "2026-10-21T15:50Z"
    },
    {
     "station": "2109",
     "epoch": 1792959000,
     "peak_q": 24.76,
-    "ref_q": 4.36,
-    "detector_t": 421.6666666666667,
-    "fixed_t": 423.0,
-    "lead_h": 1.3333333333333144,
+    "ref_q": 4.588,
+    "detector_t": 544.6666666666666,
+    "fixed_t": 546.0,
+    "lead_h": 1.3333333333333712,
     "time": "2026-10-25T20:10Z"
+   },
+   {
+    "station": "2109",
+    "epoch": 1794307200,
+    "peak_q": 13.654,
+    "ref_q": 4.588,
+    "detector_t": 921.3333333333334,
+    "fixed_t": 923.5,
+    "lead_h": 2.1666666666666288,
+    "time": "2026-11-10T10:40Z"
+   },
+   {
+    "station": "2200",
+    "epoch": 1791472800,
+    "peak_q": 14.184,
+    "ref_q": 2.541,
+    "detector_t": 134.33333333333334,
+    "fixed_t": 135.33333333333334,
+    "lead_h": 1.0,
+    "time": "2026-10-08T15:20Z"
    },
    {
     "station": "2200",
     "epoch": 1792953000,
     "peak_q": 18.0,
-    "ref_q": 2.43,
-    "detector_t": 420.5,
-    "fixed_t": 422.0,
-    "lead_h": 1.5,
+    "ref_q": 2.541,
+    "detector_t": 543.5,
+    "fixed_t": 545.1666666666666,
+    "lead_h": 1.6666666666666288,
     "time": "2026-10-25T18:30Z"
+   },
+   {
+    "station": "2200",
+    "epoch": 1794302400,
+    "peak_q": 7.327,
+    "ref_q": 2.541,
+    "detector_t": 920.5,
+    "fixed_t": 922.6666666666666,
+    "lead_h": 2.1666666666666288,
+    "time": "2026-11-10T09:20Z"
    }
   ],
-  "median_lead_h": 1.4166666666666572,
-  "mean_lead_h": 3.638888888888898,
+  "median_lead_h": 1.9166666666666572,
+  "mean_lead_h": 2.9166666666666656,
   "natural": {
-   "false_alarms": 7,
-   "hours": 4602.0,
+   "false_alarms": 8,
+   "hours": 5762.0,
    "stations": 6,
-   "station_years": 0.5249828884325805
+   "station_years": 0.6573123431439654
   },
   "peaking": {
-   "false_alarms": 22,
-   "hours": 2301.0,
+   "false_alarms": 35,
+   "hours": 2881.0,
    "stations": 3,
-   "alarms": 34,
-   "station_years": 0.2624914442162902
+   "alarms": 47,
+   "station_years": 0.3286561715719827
   }
  }
 }

@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import gzip
 import json
+import urllib.error
 import urllib.request
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
@@ -47,6 +48,8 @@ STATIONS = {**GLACIER_FED, **RAIN_FED}
 # 10-minute real-time stations (FOEN ids) for the optional live background
 LIVE_STATIONS = ["2351", "2346", "2269", "2268", "2109", "2200", "2419", "2161", "2070", "2084"]
 LIVE_API = "https://api.existenz.ch/apiv1/hydro/daterange"
+# Official FOEN/BAFU 40-day records (5-min values) behind the station pages of hydrodaten.admin.ch
+FOEN_40D_URL = "https://www.hydrodaten.admin.ch/plots/p_q_40days/{sid}_p_q_40days_de.json"
 
 
 @dataclass
@@ -161,7 +164,85 @@ def fetch_live(start: date, end: date, cache: Path = CACHE) -> dict[str, Path]:
     return out
 
 
+def parse_foen_plot(payload: dict, step_min: int = 10) -> dict[str, np.ndarray] | None:
+    """Parse one FOEN 40-day plot file (hydrodaten.admin.ch) into {"t_h", "epoch", "flow"}.
+
+    The file holds 5-minute values; only those on the ``step_min`` grid (UTC) are kept, which
+    gives the same 10-minute series the real-time relay serves. Missing, non-numeric or
+    negative values are dropped; times are sorted and de-duplicated. Returns None if the file
+    has no discharge trace.
+    """
+    traces = payload.get("plot", {}).get("data", [])
+    tr = next((t for t in traces if t.get("name") == "Abfluss"), None)
+    if tr is None:
+        tr = next((t for t in traces if t.get("yaxis") == "y2"), None)
+    if tr is None:
+        return None
+    by: dict[int, float] = {}
+    for x, y in zip(tr.get("x", []), tr.get("y", []), strict=False):
+        try:
+            ts = int(datetime.fromisoformat(str(x)).timestamp())
+            v = float(y)
+        except (TypeError, ValueError):
+            continue
+        if not np.isfinite(v) or v < 0 or ts % (step_min * 60):
+            continue
+        by[ts] = v
+    if not by:
+        return None
+    ts = np.array(sorted(by))
+    return {"t_h": (ts - ts[0]) / 3600.0, "epoch": ts, "flow": np.array([by[t] for t in ts])}
+
+
+def fetch_foen40(
+    stations: list[str] | None = None, cache: Path = CACHE, day: date | None = None
+) -> Path:
+    """Download the official FOEN 40-day discharge records into cache/foen40d/<date>/ (raw,
+    never committed). One request per station, well under the FOEN limit of one download
+    per 10 minutes and station."""
+    day = day or date.today()
+    out = cache / "foen40d" / str(day)
+    out.mkdir(parents=True, exist_ok=True)
+    for sid in stations or LIVE_STATIONS:
+        req = urllib.request.Request(FOEN_40D_URL.format(sid=sid))
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:  # noqa: S310 (fixed URL)
+                raw = resp.read()
+        except urllib.error.HTTPError as exc:  # e.g. a station without a 40-day record
+            print(f"skip {sid}: HTTP {exc.code}")
+            continue
+        json.loads(raw)  # refuse to cache an error page
+        (out / f"{sid}.json").write_bytes(raw)
+    return out
+
+
+def _foen40_dir(cache: Path) -> Path | None:
+    dirs = sorted(p for p in (cache / "foen40d").glob("*") if any(p.glob("*.json")))
+    return dirs[-1] if dirs else None
+
+
+def live_source(cache: Path = CACHE) -> dict | None:
+    """Which cached real 10-minute data ``load_live_cache`` uses (FOEN 40-day files first)."""
+    d = _foen40_dir(cache)
+    if d is not None:
+        return {"kind": "foen40d", "retrieved": d.name, "files": len(list(d.glob("*.json")))}
+    files = sorted(cache.glob("live10min_*.json"))
+    if files:
+        return {"kind": "relay", "file": files[-1].name}
+    return None
+
+
 def load_live_cache(cache: Path = CACHE) -> dict[str, dict[str, np.ndarray]]:
+    """Real 10-minute records from cache/: the official FOEN 40-day files if present (latest
+    retrieval date), otherwise the latest relay download."""
+    d = _foen40_dir(cache)
+    if d is not None:
+        out = {}
+        for f in sorted(d.glob("*.json")):
+            v = parse_foen_plot(json.loads(f.read_text(encoding="utf-8")))
+            if v is not None and len(v["flow"]) > 1:
+                out[f.stem] = v
+        return out
     files = sorted(cache.glob("live10min_*.json"))
     if not files:
         return {}

@@ -262,14 +262,25 @@ def find_live_events(
     t_h: np.ndarray, q: np.ndarray, ratio: float = 2.5, sep_h: float = 48.0
 ) -> list[int]:
     """Peaks of a REAL 10-minute record that exceed ``ratio`` x the median of the window
-    [peak-96 h, peak-24 h]; used to confirm an event from the hydrograph alone."""
+    [peak-96 h, peak-24 h]; used to confirm an event from the hydrograph alone.
+
+    Samples are visited from the highest down. A sample that is not within ``sep_h`` of a
+    higher visited peak is a peak candidate, and it claims its +-``sep_h`` neighbourhood
+    whether or not it can be confirmed. So a flood whose peak has too little history (it sits
+    near or before the record start) yields no event, instead of a later, lower blip on its
+    falling limb being reported as the peak.
+    """
     out: list[int] = []
-    order = np.argsort(-q)
+    claimed = np.zeros(len(q), dtype=bool)
+    order = np.argsort(-q, kind="stable")
     for i in order:
         if q[i] <= 0:
             break
-        if any(abs(t_h[i] - t_h[j]) < sep_h for j in out):
+        if claimed[i]:
             continue
+        lo = int(np.searchsorted(t_h, t_h[i] - sep_h, side="right"))
+        hi = int(np.searchsorted(t_h, t_h[i] + sep_h, side="left"))
+        claimed[lo:hi] = True
         m = (t_h >= t_h[i] - 96) & (t_h <= t_h[i] - 24)
         if m.sum() < 50:
             continue
@@ -302,9 +313,15 @@ def run_live(
 
     Per station: events are peaks confirmed from the hydrograph (``find_live_events``). Stations
     whose events recur at the same hour of day are labelled "peaking" (regulated releases) and
-    reported separately. Lead = fixed-threshold alarm time minus detector alarm time, both
-    searched in [peak - 36 h, peak + 1 h]. False alarms are detector onsets (episodes merged
-    within ``merge_h``) more than 36 h from any confirmed event of the same station.
+    reported separately.
+
+    Both alarms are reduced to episode onsets (runs merged within ``merge_h``). For each event
+    the alarm time is the onset of the LAST episode that starts in [peak - 36 h, peak + 1 h],
+    i.e. the episode that leads into the peak; lead = fixed onset minus detector onset. An
+    earlier, separate detector episode in that window ended before the rise and is counted as a
+    false alarm, not as warning. If the fixed alarm has no onset in the window (still on from a
+    previous flood) the lead is undefined. False alarms are detector onsets that are no event's
+    alarm and do not fall in the 36 h after a confirmed peak of the same station.
     """
     cfg = cfg or fast_config()
     events = []
@@ -320,19 +337,15 @@ def run_live(
         trig = [bool(det.update(float(t), float(x)).reason) for t, x in zip(t_h, q, strict=True)]
         alarm_t = onsets(t_h, trig, merge_h)
         fx = FixedThreshold(fixed_lvl)
-        fixed_flags = [fx.update(float(x)) for x in q]
-        if not is_peaking:
-            for i in evs:
-                lo, hi = t_h[i] - 36.0, t_h[i] + 1.0
-                d = next((t for t in alarm_t if lo <= t <= hi), None)
-                f = next(
-                    (
-                        float(t)
-                        for t, a in zip(t_h, fixed_flags, strict=True)
-                        if a and lo <= t <= hi
-                    ),
-                    None,
-                )
+        fixed_t = onsets(t_h, [fx.update(float(x)) for x in q], merge_h)
+        used = set()
+        for i in evs:
+            lo, hi = t_h[i] - 36.0, t_h[i] + 1.0
+            d = next((t for t in reversed(alarm_t) if lo <= t <= hi), None)
+            f = next((t for t in reversed(fixed_t) if lo <= t <= hi), None)
+            if d is not None:
+                used.add(d)
+            if not is_peaking:
                 events.append(
                     {
                         "station": sid,
@@ -345,9 +358,13 @@ def run_live(
                     }
                 )
         ev_t = [t_h[i] for i in evs]
-        far = [t for t in alarm_t if all(abs(t - e) > 36.0 for e in ev_t)]
+        false = [
+            t
+            for t in alarm_t
+            if t not in used and not any(0.0 < t - e <= 36.0 for e in ev_t)
+        ]
         bucket = peaking if is_peaking else natural
-        bucket["false_alarms"] += len(far)
+        bucket["false_alarms"] += len(false)
         bucket["hours"] += float(t_h[-1] - t_h[0])
         bucket["stations"] += 1
         if is_peaking:
