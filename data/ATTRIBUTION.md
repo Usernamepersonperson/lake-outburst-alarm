@@ -17,7 +17,15 @@ Missing discharge days are empty (precipitation and temperature are blanked on t
 ## 10-minute real-time discharge (not committed)
 
 `python -m lakealarm fetch` writes `cache/live10min_<start>_<end>.json` from api.existenz.ch, an unofficial
-relay of FOEN/BAFU real-time data. The relay states free use for public and non-commercial purposes and that
-the original data owner may add licence restrictions. The FOEN terms of use could not be retrieved when this
-repository was written, so the raw 10-minute data is not redistributed here. `data/results.json` contains
-only derived values (event times, peak and median flows, lead times).
+relay of FOEN/BAFU real-time data (https://www.hydrodaten.admin.ch/). The relay states free use for public and
+non-commercial purposes, that the original data owner may add licence restrictions, and that FOEN/BAFU data
+must be credited and linked. The FOEN conditions for current raw hydrological data
+(https://www.bafu.admin.ch/dam/de/sd-web/5NAitqNKub6m/allgemeine_bedingungenfuerdasherunterladenaktuellerhydrologische.pdf,
+version of 16.09.2019, checked 2026-11-11) allow commercial and non-commercial use and recommend naming the
+source; they do not explicitly cover republishing raw series, so the raw 10-minute data is not redistributed
+here. `data/results.json` contains only derived values (event times, peak and median flows, lead times).
+
+## Flood catalogue
+
+The six flood windows in `lakealarm/events.py` and their sources are listed in the README
+("Flood catalogue: dates and sources"); they were checked against FOEN and MeteoSwiss reports on 2026-11-11.
