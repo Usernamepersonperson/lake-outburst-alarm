@@ -5,7 +5,7 @@ description = "Rate-of-rise alarm for glacial / ice-dammed lake outbursts and su
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-authors = [{ name = "Victor Bonilla" }]
+authors = [{ name = "VB-Builds" }]
 dependencies = ["numpy>=1.26"]
 
 [project.optional-dependencies]

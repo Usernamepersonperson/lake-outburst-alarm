@@ -128,4 +128,4 @@ Other real-world facts in this README:
 
 ## Licence
 
-MIT, Copyright (c) 2026 Victor Bonilla. The daily data subset keeps its own licence (CC BY 4.0, see above).
+MIT, Copyright (c) 2026 VB-Builds. The daily data subset keeps its own licence (CC BY 4.0, see above).
